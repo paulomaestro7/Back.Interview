@@ -1,3 +1,7 @@
+using Back.Interview.Domain;
+using Back.Interview.Domain.Interfaces;
+using Back.Interview.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddScoped<IDataInterviewDomain, DataInterviewDomain>();
+builder.Services.AddScoped<IDataInterviewRepository, DataInterviewRepository>();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
