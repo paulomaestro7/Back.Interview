@@ -1,4 +1,5 @@
-using Back.Interview.Domain.Repositories;
+using Back.Interview.Domain;
+using Back.Interview.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Back.Interview.Controllers
@@ -8,18 +9,19 @@ namespace Back.Interview.Controllers
     public class InterviewController : ControllerBase
     {
         private readonly ILogger<InterviewController> _logger;
-        private readonly IDataInterviewRepository _dataInterviewRepository;
+        private readonly IDataInterviewDomain _dataInterviewDomain;
 
-        public InterviewController(ILogger<InterviewController> logger, IDataInterviewRepository dataInterviewRepository)
+        public InterviewController(ILogger<InterviewController> logger, IDataInterviewDomain dataInterviewDomain)
         {
             _logger = logger;
+            _dataInterviewDomain = dataInterviewDomain;
         }
 
         [HttpGet(Name = "GetInterview")]
-        public IActionResult GetInterviewAsync()
+        public async Task<IActionResult> GetInterviewAsync()
         {
             _logger.LogInformation("Chegamos na controller e estamos no metodo GetInterviewAsync");
-            var data = _dataInterviewRepository.GetDataAsync();
+            var data = await _dataInterviewDomain.GetDataAsync();
             return Ok(data);
         }
     }
